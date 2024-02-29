@@ -36,6 +36,7 @@ namespace ongApi.Services.Implementations
                 Location = dto.Location,
                 Description = dto.Description,
                 JefeId = dto.JefeId,
+                ImgUrl = dto.ImgUrl
             };
             _context.Activities.Add(newActivity);
             _context.SaveChanges();

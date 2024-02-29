@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting.Internal;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ongApi.Data;
@@ -81,6 +82,10 @@ namespace ongApi
                 app.UseSwaggerUI();
             }
 
+            app.UseCors(
+             options => options.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin()
+                 );
+
             app.UseHttpsRedirection();
             
             app.UseAuthentication();
@@ -89,7 +94,10 @@ namespace ongApi
 
             app.MapControllers();
 
+            app.UseStaticFiles();
+
             app.Run();
         }
+        
     }
 }

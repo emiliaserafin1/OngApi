@@ -9,6 +9,7 @@ namespace ongApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
@@ -114,11 +115,12 @@ namespace ongApi.Controllers
             }
         }
 
-        [HttpPost("registerForActivity")]
-        public IActionResult RegisterForActivity(int userId, int activityId)
+        [HttpPost("registerForActivity/{activityId}")]
+        public IActionResult RegisterForActivity( int activityId)
         {
             try
             {
+                int userId = int.Parse((User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier)?.Value));
                 _userService.RegisterForActivity(userId, activityId);
             }
             catch (Exception ex)

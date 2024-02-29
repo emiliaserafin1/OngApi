@@ -1,4 +1,6 @@
-﻿namespace ongApi.Models.Dtos
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ongApi.Models.Dtos
 {
     public class CreateAndUpdateUserDto
     {
@@ -9,6 +11,7 @@
         public string Address { get; set; }
         public string Phone { get; set; }
         public string DNI { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime BirthDate { get; set; }
     }
 }

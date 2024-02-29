@@ -13,6 +13,7 @@ namespace ongApi.Entities
         public string Description { get; set; }
         public int VolunteerCount { get; set; } = 0;
         public ActivityState State { get; set; } = ActivityState.ConCupo;
+        public string ImgUrl { get; set; } = "";
         public ICollection<User> Users { get; set; }
         public int? JefeId { get; set; } 
         public User Jefe { get; set; }

@@ -1,11 +1,19 @@
 {
   "Version": 1,
-  "Hash": "ZMkrl854OnVOFQ6cjN67AG7u2P0m9jn8bbkWB146ZIc=",
+  "Hash": "DMyf3I0O/AseA+As+LXufiGv3otb9hRnf+sUNu6zV4I=",
   "Source": "ongApi",
   "BasePath": "_content/ongApi",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "ongApi\\wwwroot",
+      "Source": "ongApi",
+      "ContentRoot": "C:\\git-repos\\ongApi\\wwwroot\\",
+      "BasePath": "_content/ongApi",
+      "Pattern": "**"
+    }
+  ],
   "Assets": []
 }

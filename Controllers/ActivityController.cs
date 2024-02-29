@@ -38,22 +38,27 @@ namespace ongApi.Controllers
             return Ok(activity);
         }
         [HttpPost]
-        public IActionResult CreateActivity(CreateAndUpdateActivityDto dto)
+        public IActionResult CreateActivity([FromForm] CreateAndUpdateActivityDto dto, IFormFile image)
         {
             try
             {
+                if (image != null && image.Length > 0)
+                {
+                    string imagePath = GuardarImagen(image); // Guardar la imagen
+                    dto.ImgUrl = imagePath; // Asignar la URL de la imagen al DTO
+                }
+
                 _activityService.CreateActivity(dto);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
+                return BadRequest(ex.Message);
             }
 
             return Created("Created", dto);
         }
+
+    
         [HttpPut("{activityId}")]
         public IActionResult UpdateActivity(CreateAndUpdateActivityDto dto, int activityId)
         {
@@ -111,6 +116,35 @@ namespace ongApi.Controllers
             }
             return Ok(materials);
         }
+
+        // Método para guardar la imagen en el servidor
+        private static string GuardarImagen(IFormFile image)
+        {
+            // Genera un nombre de archivo único para evitar conflictos.
+            string fileName = Guid.NewGuid().ToString() + Path.GetExtension(image.FileName);
+
+            // Obtiene la ruta de la carpeta donde se guardarán las imágenes (wwwroot/Images).
+            string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Images");
+
+            // Si la carpeta no existe, la crea.
+            if (!Directory.Exists(uploadsFolder))
+            {
+                Directory.CreateDirectory(uploadsFolder);
+            }
+
+            // Combina la ruta de la carpeta con el nombre del archivo para obtener la ruta completa del archivo.
+            string filePath = Path.Combine(uploadsFolder, fileName);
+
+            // Guarda la imagen en el sistema de archivos.
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                image.CopyTo(fileStream);
+            }
+
+            // Devuelve la ruta relativa de la imagen.
+            return "/Images/" + fileName;
+        }
+
 
     }
 
